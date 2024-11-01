@@ -19,29 +19,10 @@ const transporter = nodemailer.createTransport({
   
 const sendMail = async(email,code,userName,userId) => {
 
-    // const mailOptions = {
-    //     from: '"DKA" <saitharakdev@gmail.com>', 
-    //     to: [email],
-    //     subject: "Forgot Password",
-    //     text: `Authentication Code: ${code}`,
-    //     html: `
-    //         <div style="font-family: Helvetica, Arial, sans-serif; min-width: 1000px; overflow: auto; line-height: 2;">
-    //             <div style="margin: 50px auto; width: 100%; padding: 20px 0;">
-    //                 <div style="border-bottom: 1px solid #eee;">
-    //                     <a href="" style="font-size: 1.4em; color: #00466a; text-decoration: none; font-weight: 600;">DKA</a>
-    //                 </div>
-    //                 <p style="font-size: 1.1em;">Hi,</p>
-    //                 <p>Use the following OTP to complete your Sign Up procedures:</p>
-    //                 <h2 style="background: #00466a; margin: 0 auto; width: max-content; padding: 0 10px; color: #fff; border-radius: 4px;">${code}</h2>
-    //                 <p style="font-size: 0.9em;">Regards,<br />DKA</p>
-    //                 <hr style="border: none; border-top: 1px solid #eee;" />
-    //                 <div style="float: right; padding: 8px 0; color: #aaa; font-size: 0.8em; line-height: 1; font-weight: 300;">
-    //                     <p>DKA</p>
-    //                 </div>
-    //             </div>
-    //         </div>
-    //     `,
-    // };
+    console.log('====================================');
+    console.log(email,userName,userId);
+    console.log('====================================');
+
     
 
     const mailOptions = {
@@ -102,8 +83,8 @@ const sendMail = async(email,code,userName,userId) => {
                             <h1>Secure OTP Verification</h1>
                         </div>
                         <div class="content">
-                            <p>Dear ,</p>
-                            <p>OTP request for acoount with DKA Id  <span></span></p>
+                            <p>Dear <span>${userName}</span>,</p>
+                            <p>OTP request for acoount with DKA Id <span>${userId}</span></p>
                             <p>Your OTP code is <span class="otp-code">${code}</span>.</p>
                             <p>Please enter this code to complete your verification process.</p>
                         </div>
@@ -135,7 +116,7 @@ const VerifyMail = asyncHandler(async(req,res) => {
 
     if (docSnap.exists()) {
         const userData = docSnap.data();
-        console.log("Document data:", docSnap.data());
+        // console.log("Document data:", docSnap.data());
         
         await SendEmail(userData.email, docRef,userData.name,userData.id);
 
@@ -151,10 +132,10 @@ function generateOTP() {
     return otp.toString();
 }
 
-const SendEmail = asyncHandler(async( email, docRef ) =>{
+const SendEmail = asyncHandler(async( email, docRef,userName, userId ) =>{
     const otp = generateOTP();
     await updateDoc(docRef, {"OTP": otp });
-    await sendMail(email,otp).catch(console.error);
+    await sendMail(email,otp,userName,userId).catch(console.error);
 });
 
 const VerifyOTP = asyncHandler( async(req, res) => {
