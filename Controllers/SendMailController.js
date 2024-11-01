@@ -17,7 +17,7 @@ const transporter = nodemailer.createTransport({
 });
   
   
-const sendMail = async(email,name,Id,code) => {
+const sendMail = async(email,code,userName,userId) => {
 
     // const mailOptions = {
     //     from: '"DKA" <saitharakdev@gmail.com>', 
@@ -102,8 +102,8 @@ const sendMail = async(email,name,Id,code) => {
                             <h1>Secure OTP Verification</h1>
                         </div>
                         <div class="content">
-                            <p>Dear ${name},</p>
-                            <p>OTP request for acoount with DKA Id : ${Id}</p>
+                            <p>Dear ,</p>
+                            <p>OTP request for acoount with DKA Id  <span></span></p>
                             <p>Your OTP code is <span class="otp-code">${code}</span>.</p>
                             <p>Please enter this code to complete your verification process.</p>
                         </div>
@@ -137,7 +137,7 @@ const VerifyMail = asyncHandler(async(req,res) => {
         const userData = docSnap.data();
         console.log("Document data:", docSnap.data());
         
-        await SendEmail(userData.email,userData.name,userData.id, docRef);
+        await SendEmail(userData.email, docRef,userData.name,userData.id);
 
         res.json({Message:"User found and OTP sent !",Email:userData.email});
     } else {
