@@ -79,7 +79,7 @@ const sendMail = async(email,code,userName,userId) => {
                 <body>
                     <div class="container">
                         <div class="header">
-                            <img src="https://firebasestorage.googleapis.com/v0/b/divya-kala-academy.appspot.com/o/assets%2FDKA.png?alt=media&token=0d4e2e7f-548c-4904-901c-fa93a158c46e" alt="Company Logo" style="max-width: 150px; height: auto;">
+                            <img src="https://res.cloudinary.com/dtjknk4ra/image/upload/v1730462409/DKA_q9oemj.png" alt="Company Logo" style="max-width: 150px; height: auto;">
                             <h1>Secure OTP Verification</h1>
                         </div>
                         <div class="content">
